@@ -6,8 +6,8 @@ WORKDIR /usr/src/app
 
 # Install app dependencies (use package-lock if present)
 COPY package*.json ./
-RUN npm ci --only=production
-##RUN npm install
+##RUN npm ci --only=production
+RUN npm install
 
 # Copy source
 COPY . .
