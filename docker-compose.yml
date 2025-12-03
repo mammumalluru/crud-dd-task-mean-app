@@ -38,6 +38,9 @@ services:
       - backend
     networks:
       - intern
+volumes:
+  mongo-data:
+    driver: local
 
 networks:
   intern:
