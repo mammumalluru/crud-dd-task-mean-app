@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root123
+    volumes:
+      - mongo-data:/data/db                      # host ./data/db -> container /data/db
+      - ./mongo-init-scripts:/docker-entrypoint-initdb.d:ro
+    networks:
+      - intern
+
+  backend:
+    image: intern/backend                       # image name you requested
+    container_name: backend                     # container name you requested
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_URL=mongodb://root:root123@mongodb:27017/dd_db?authSource=admin
+      - PORT=8080
+    depends_on:
+      - mongodb
+    networks:
+      - intern
+
+  frontend:
+    image: intern/frontend                       # image name you requested
+    container_name: frontend                     # container name you requested
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - intern
+
+networks:
+  intern:
+    driver: bridge
