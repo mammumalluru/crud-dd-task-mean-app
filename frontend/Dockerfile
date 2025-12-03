@@ -14,14 +14,13 @@ RUN npm run build -- --configuration production
 
 # --- Run stage (nginx) ---
 FROM nginx:stable-alpine
-# Remove default nginx static assets
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy built app from build stage
 COPY --from=build /app/dist/angular-15-crud /usr/share/nginx/html
 
-# If you want a custom nginx config, copy it here:
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy custom nginx config
+COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
