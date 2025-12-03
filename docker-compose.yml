@@ -2,7 +2,7 @@
 
 services:
   mongodb:
-    image: mongo:6
+    image: mamathamm/internmongo
     container_name: mongodb
     restart: unless-stopped
     ports:
@@ -17,7 +17,7 @@ services:
       - intern
 
   backend:
-    image: intern/backend                       # image name you requested
+    image: mamathamm/internbackend                      # image name you requested
     container_name: backend                     # container name you requested
     ports:
       - "8080:8080"
@@ -30,7 +30,7 @@ services:
       - intern
 
   frontend:
-    image: intern/frontend                       # image name you requested
+    image: mamathamm/internfrontend                      # image name you requested
     container_name: frontend                     # container name you requested
     ports:
       - "80:80"
